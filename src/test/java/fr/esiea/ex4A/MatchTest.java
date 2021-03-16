@@ -1,9 +1,8 @@
-package fr.esiea.ex4A.hello;
+package fr.esiea.ex4A;
 
+import fr.esiea.ex4A.Match;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MatchTest {
 

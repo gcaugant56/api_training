@@ -1,4 +1,4 @@
-package fr.esiea.ex4A.hello;
+package fr.esiea.ex4A.Agify;
 import java.util.HashMap;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;

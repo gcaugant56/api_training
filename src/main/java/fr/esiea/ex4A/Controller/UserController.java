@@ -1,7 +1,12 @@
-package fr.esiea.ex4A.hello;
+package fr.esiea.ex4A.Controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.esiea.ex4A.Agify.AgifyClient;
+import fr.esiea.ex4A.Agify.AgifyUser;
+import fr.esiea.ex4A.Match;
+import fr.esiea.ex4A.Repository.UserRepository;
+import fr.esiea.ex4A.Service.AgifyService;
+import fr.esiea.ex4A.User;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,29 +15,18 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-class HelloController {
+class UserController {
 
-    private final HelloRepository helloRepository;
+    private final UserRepository userRepository;
 
     private final AgifyClient client;
 
     private final AgifyService service;
 
-    HelloController(HelloRepository helloRepository, AgifyClient client, AgifyService service) {
-        this.helloRepository = helloRepository;
+    UserController(UserRepository userRepository, AgifyClient client, AgifyService service) {
+        this.userRepository = userRepository;
         this.client = client;
         this.service = service;
-    }
-
-    @GetMapping(path = "/hello", produces = MediaType.APPLICATION_JSON_VALUE)
-    HelloData sayHello(@RequestParam(name = "name", required = false) String name) {
-        final HelloData helloData;
-        if (name == null || name.isBlank()) {
-            helloData = helloRepository.randomHello();
-        } else {
-            helloData = helloRepository.getHelloFor(name);
-        }
-        return helloData;
     }
 
     @PostMapping(path = "/api/inscription",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,8 +35,7 @@ class HelloController {
     {
 
         User user = new User(requestBody.get("userEmail"),requestBody.get("userName"),requestBody.get("userTweeter"), requestBody.get("userCountry"),requestBody.get("userSex"), requestBody.get("userSexPref"));
-        helloRepository.addUser(user);
-        return true;
+        return userRepository.addUser(user);
     }
 
     @GetMapping(path = "/api/matches",produces = MediaType.APPLICATION_JSON_VALUE )
