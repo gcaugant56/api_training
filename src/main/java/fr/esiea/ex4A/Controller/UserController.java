@@ -35,8 +35,7 @@ class UserController {
     {
 
         User user = new User(requestBody.get("userEmail"),requestBody.get("userName"),requestBody.get("userTweeter"), requestBody.get("userCountry"),requestBody.get("userSex"), requestBody.get("userSexPref"));
-        userRepository.addUser(user);
-        return true;
+        return userRepository.addUser(user);
     }
 
     @GetMapping(path = "/api/matches",produces = MediaType.APPLICATION_JSON_VALUE )

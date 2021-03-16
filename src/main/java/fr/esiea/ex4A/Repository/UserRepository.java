@@ -39,15 +39,15 @@ public class UserRepository {
 
     public boolean addUser(User user)
     {
-        if(inscript.contains(user))
+        for(User userlist : inscript)
         {
-            return false;
+            if (userlist.getUserEmail().equals(user.getUserEmail()))
+            {
+                return false;
+            }
         }
-        else
-        {
-            inscript.add(user);
-            return true;
-        }
+        inscript.add(user);
+        return true;
 
     }
 }
