@@ -1,4 +1,4 @@
-package fr.esiea.ex4A.hello;
+package fr.esiea.ex4A.Agify;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -7,8 +7,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class AgifyUserTest {
 

@@ -1,5 +1,10 @@
-package fr.esiea.ex4A.hello;
+package fr.esiea.ex4A.Service;
 
+import fr.esiea.ex4A.Agify.AgifyClient;
+import fr.esiea.ex4A.Agify.AgifyUser;
+import fr.esiea.ex4A.Match;
+import fr.esiea.ex4A.Repository.UserRepository;
+import fr.esiea.ex4A.User;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -10,12 +15,12 @@ public class AgifyService {
 
     private final AgifyClient client;
 
-    private final HelloRepository helloRepository;
+    private final UserRepository userRepository;
 
-    public AgifyService(AgifyClient client, HelloRepository helloRepository)
+    public AgifyService(AgifyClient client, UserRepository userRepository)
     {
         this.client = client;
-        this.helloRepository = helloRepository;
+        this.userRepository = userRepository;
     }
 
     public AgifyUser getAge(String name, String country) throws IOException {
@@ -24,7 +29,7 @@ public class AgifyService {
 
     public ArrayList<Match> getMatches(int ageReference) throws IOException {
         ArrayList<Match> matches = new ArrayList<Match>();
-        for(User match : helloRepository.inscript)
+        for(User match : userRepository.getInscript())
         {
             AgifyUser matchFind = getAge(match.getUserName(), match.getUserCountry());
             if(matchFind.getAge() - ageReference < 5 && matchFind.getAge() - ageReference > -5)
