@@ -91,6 +91,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <includes>
+                            <include>src/test/java/fr.esiea.ex4A/*</include>
+                        </includes>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -134,10 +139,10 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>integration-test</id>
+                        <id>integration-report</id>
                         <phase>integration-test</phase>
                         <goals>
-                            <goal>report-integration</goal>
+                            <goal>report</goal>
                         </goals>
                     </execution>
                 </executions>
