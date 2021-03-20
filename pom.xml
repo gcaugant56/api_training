@@ -133,6 +133,13 @@
                             <goal>report</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>integration-test</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>report-integration</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
