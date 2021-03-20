@@ -30,4 +30,20 @@ class UserControllerIT {
         this.mockMvc = mockMvc;
     }
 
+    @Test
+    void methodPost() throws Exception {
+        User user = new User("caugant.guillaume@laposte.net", "Panda", "PandaLeNarvalo", "France", "M", "F");
+        ObjectMapper mapper = new ObjectMapper();
+        String result = mapper.writeValueAsString(user);
+        mockMvc
+            .perform(MockMvcRequestBuilders.post("/api/inscription")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(result)
+            )
+            .andExpect(status().isOk())
+            .andExpect( content().string("result : true"));
+
+    }
+
+
 }
