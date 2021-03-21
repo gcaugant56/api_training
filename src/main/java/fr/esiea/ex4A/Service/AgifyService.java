@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class AgifyService {
@@ -16,6 +18,8 @@ public class AgifyService {
     private final AgifyClient client;
 
     private final UserRepository userRepository;
+
+    private final Map<String,Integer> cache = new HashMap<>();
 
     public AgifyService(AgifyClient client, UserRepository userRepository)
     {
@@ -29,16 +33,26 @@ public class AgifyService {
 
     public ArrayList<Match> getMatches(int ageReference) throws IOException {
         ArrayList<Match> matches = new ArrayList<Match>();
-        for(User match : userRepository.getInscript())
-        {
-            AgifyUser matchFind = getAge(match.getUserName(), match.getUserCountry());
-            if(matchFind.getAge() - ageReference < 5 && matchFind.getAge() - ageReference > -5)
-            {
+        for(User match : userRepository.getInscript()) {
+            int ageMatch = getFromCache(match);
+            if(ageMatch - ageReference < 5 && ageMatch - ageReference > -5) {
                 matches.add(new Match(match.getUserName(), match.getUserTweeter()));
             }
         }
         return matches;
+    }
 
+    public int getFromCache(User user) throws IOException {
+        int value = 0;
+        if(!cache.containsKey(user.getUserName()+"-"+user.getUserCountry())) {
+            AgifyUser matchFind = getAge(user.getUserName(), user.getUserCountry());
+            cache.put(user.getUserName()+"-"+user.getUserCountry(),matchFind.getAge());
+            value = matchFind.getAge();
+        }
+        else {
+            value = cache.get(user.getUserName()+"-"+user.getUserCountry());
+        }
+        return value;
     }
 
 }
