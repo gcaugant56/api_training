@@ -28,7 +28,9 @@ public class AgifyService {
     }
 
     public AgifyUser getAge(String name, String country) throws IOException {
-        return (AgifyUser) client.getAgeUser(name,country).execute().body();
+        Map<String, String> userMap = client.getAgeUser(name,country).execute().body();
+        AgifyUser userFinal =  new AgifyUser(userMap.get("name"), Integer.parseInt(userMap.get("age")),Integer.parseInt(userMap.get("count")),userMap.get("country_id"));
+        return userFinal;
     }
 
     public ArrayList<Match> getMatches(int ageReference) throws IOException {

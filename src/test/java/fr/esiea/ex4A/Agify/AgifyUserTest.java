@@ -7,6 +7,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
+import java.util.Map;
 
 class AgifyUserTest {
 
@@ -18,11 +19,9 @@ class AgifyUserTest {
             .addConverterFactory(JacksonConverterFactory.create())
             .build()
             .create(AgifyClient.class);
-
-        Call<AgifyUser> user = test.getAgeUser("guillaume","FR");
-
-        AgifyUser userFinal = user.execute().body();
-        return userFinal;
+        Call<Map<String,String>> user = test.getAgeUser("guillaume","FR");
+        Map<String, String> userFinal = user.execute().body();
+        return new AgifyUser(userFinal.get("name"), Integer.parseInt(userFinal.get("age")),Integer.parseInt(userFinal.get("count")),userFinal.get("country_id"));
     }
 
     @Test
@@ -33,23 +32,9 @@ class AgifyUserTest {
     }
 
     @Test
-    void setName() throws IOException {
-        AgifyUser testUser = AgifyUserTest();
-        testUser.setName("toto");
-        Assertions.assertEquals("toto",testUser.getName());
-    }
-
-    @Test
     void getAge() throws IOException {
         AgifyUser testUser = AgifyUserTest();
         Assertions.assertEquals(48,testUser.getAge());
-    }
-
-    @Test
-    void setAge() throws IOException {
-        AgifyUser testUser = AgifyUserTest();
-        testUser.setAge(24);
-        Assertions.assertEquals(24,testUser.getAge());
     }
 
     @Test
@@ -59,22 +44,8 @@ class AgifyUserTest {
     }
 
     @Test
-    void setCount() throws IOException {
-        AgifyUser testUser = AgifyUserTest();
-        testUser.setCount(10000);
-        Assertions.assertEquals(10000,testUser.getCount());
-    }
-
-    @Test
     void getCountryId() throws IOException {
         AgifyUser testUser = AgifyUserTest();
         Assertions.assertEquals("FR",testUser.getCountryId());
-    }
-
-    @Test
-    void setCountryId() throws IOException {
-        AgifyUser testUser = AgifyUserTest();
-        testUser.setCountryId("EN");
-        Assertions.assertEquals("EN",testUser.getCountryId());
     }
 }
